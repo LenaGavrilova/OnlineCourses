@@ -1,0 +1,63 @@
+{% if is_granted("ROLE_ADMIN") %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Онлайн-школа</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('admin_course_list') }}">Все курсы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_user_list') }}">Все пользователи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_lesson_list') }}">Все уроки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_feedback_list') }}">Все комментарии</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('my_account') }}">Мой аккаунт</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('logout') }}">Выйти</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% else %}
+    {% if is_granted("ROLE_USER") %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Онлайн-школа</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('home') }}">Все курсы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('my_courses') }}">Мои курсы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('my_account') }}">Мой аккаунт</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    {% else %}
+        <header class="bg-dark text-white text-center py-5">
+            <h1>Добро пожаловать в нашу онлайн-школу</h1>
+            <p>Изучайте новые навыки онлайн с нашими курсами</p>
+            <a href="{{ path('user_registration') }}" class="btn btn-primary">Присоединиться</a>
+        </header>
+    {% endif %}
+{% endif %}

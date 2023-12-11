@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'header.html.twig' %}
+<title>{{ course.name }}</title>
+<body>
+<header class="bg-dark text-white text-center py-5">
+    <h1>{{ course.name }}</h1>
+</header>
+
+<section class="container my-5">
+    <h2 class="text-center mb-4">Содержание курса</h2>
+    <ul class="list-group">
+        {% for lesson in lessons %}
+            <li class="list-group-item">
+                <form action="{{ path("lesson",{"lessonId":lesson.id}) }}" method="get">
+                    <input hidden name="id" value="{{ lesson.id }}">
+                    <input hidden name="course_id" value="{{ course.id }}">
+                    <button class="btn btn-primary" type="submit">{{ lesson.name }}</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2023 Онлайн-школа</p>
+</footer>
+
+{% endblock %}
+

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel - Feedbacks{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    <h1>Комментарии</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Text</th>
+            <th>Login</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for feedback in feedbacks %}
+            <tr>
+                <td>{{ feedback.id }}</td>
+                <td>{{ feedback.text }}</td>
+                <td>{{ feedback.userId[0].login }}</td>
+                <th>{{ feedback.date }}</th>
+                <td>
+                    <form action="{{ path('admin_feedback_delete',{"id":feedback.id}) }}" method="post">
+                        <input hidden name="id" value="{{ feedback.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

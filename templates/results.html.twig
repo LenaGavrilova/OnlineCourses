@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'header.html.twig' %}
+
+
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Результаты поиска</h2>
+        <div class="row">
+            {% for result in results %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ result.image }}" width="250" height="250" class="card-img-top">
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ result.name }}</h5>
+                            <p class="card-text"></p>
+                            <form action="{{ path("about") }}" method="post">
+                                <input hidden name="id" value="{{ result.id }}">
+                                <button type="submit" class="btn btn-primary"> Подробнее</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <h3 class="d-block text-center mt-3">
+        <a href="{{ path('home') }}">На главную</a>
+    </h3>
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 Онлайн-школа</p>
+    </footer>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'header.html.twig' %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Добро пожаловать, <span id="username">{{ app.user.name }}</span>!</h2>
+                {% if courses is empty %}
+                    <p>{{ noCourse }}</p>
+                {% else %}
+                    <p>Ваш последний курс: </p>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="{{ lastCourse.image }}" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ lastCourse.name }}</h5>
+                                <p class="card-text"></p>
+                                <form action="{{ path("addCourse") }}" method="post">
+                                    <input hidden name="id" value="{{ lastCourse.id }}">
+                                    <button type="submit" class="btn btn-primary"> Продолжить обучение</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Ваши курсы: </p>
+                    <div class="row">
+                        {% for course in courses %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="{{ course.image }}" width="300" height="300" class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ course.name }}</h5>
+                                        <p class="card-text"></p>
+                                        <form action="{{ path("addCourse") }}" method="post">
+                                            <input hidden name="id" value="{{ course.id }}">
+                                            <button type="submit" class="btn btn-primary"> Продолжить обучение</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <h3 class="d-block text-center mt-3">
+        <a href="{{ path('home') }}">На главную</a>
+    </h3>
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 Онлайн-школа</p>
+    </footer>
+{% endblock %}

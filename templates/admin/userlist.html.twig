@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel - Users{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    <h1>Пользователи</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Login</th>
+            <th>Registration date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.login }}</td>
+                <td>{{ user.registrationDate }}</td>
+                <td>
+                    <form action="{{ path('admin_user_edit',{"id":user.id}) }}" method="post">
+                        <input hidden name="id" value="{{ user.id }}">
+                        <button type="submit" class="btn btn-primary btn-sm">Редактировать</button>
+                    </form>
+                    <form action="{{ path('admin_user_delete',{"id":user.id}) }}" method="post">
+                        <input hidden name="id" value="{{ user.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('admin_user_new') }}" class="btn btn-success">Добавить пользователя</a>
+{% endblock %}
+

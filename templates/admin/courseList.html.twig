@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel - Courses{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    <h1>Курсы</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Difficulty</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.id }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.description }}</td>
+                <td>{{ course.difficulty }}</td>
+                <td>{{ course.category }}</td>
+                <td>
+                    <form action="{{ path('admin_course_edit',{"id":course.id}) }}" method="post">
+                        <input hidden name="id" value="{{ course.id }}">
+                        <button type="submit" class="btn btn-primary btn-sm">Редактировать</button>
+                    </form>
+                    <form action="{{ path('admin_course_delete',{"id":course.id}) }}" method="post">
+                        <input hidden name="id" value="{{ course.id }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('admin_course_new') }}" class="btn btn-success">Добавить курс</a>
+{% endblock %}

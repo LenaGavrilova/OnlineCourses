@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'header.html.twig' %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-8">
+                <h2> {{ course.name }}</h2>
+                <br><br>
+                <h3>{{ lesson.name }}</h3>
+                <p>Описание: {{ lesson.description }}</p>
+                <p class="card-text">Длительность урока: {{ lesson.duration }}</p>
+                <iframe width="560" height="315" src="{{ lesson.material }}" frameborder="0" allowfullscreen></iframe>
+
+                {% if nextLessonId!=null %}
+                    <form action="{{ path("lesson",{"lessonId":nextLessonId}) }}" method="post">
+                        <button class="btn btn-primary" type="submit"> Следующий урок</button>
+                    </form>
+                {% else %}
+                    <form action="{{ path("home") }}" method="post">
+                        <button class="btn btn-primary" type="submit"> Завершить обучение</button>
+                    </form>
+                {% endif %}
+
+                <div class="comments">
+                    <h3>Комментарии</h3>
+                    <form id="commentForm" action="{{ path('addFeedback') }}">
+                        <div class="form-group">
+                            <input hidden name="id" id="id" value="{{ lesson.id }}">
+                            <textarea class="form-control" id='text' name="text" rows="3"
+                                      placeholder="Напишите комментарий"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+                    </form>
+                    <hr>
+                    <div id="commentsList">
+                        {% for comment in comments %}
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <p>{{ comment.text }}</p>
+                                    <small class="text-muted">{{ comment.userId[0].getLogin() }}
+                                        - {{ comment.date }}</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% if comments is empty %}
+                            <p>Пока нет комментариев.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 Онлайн-школа</p>
+    </footer>
+{% endblock %}
